@@ -1,36 +1,57 @@
-// import { Request, Response } from 'express';
-// import bcrypt from 'bcryptjs';
-// import jwt from 'jsonwebtoken';
-// import User from '../models/User';
+import { StatusCodes } from 'http-status-codes';
+import catchAsync from '../../utils/catchAsync';
+import sendResponse from '../../utils/sendResponse';
+import { AuthServices } from './auth.service';
+import { Request, Response } from 'express';
+import config from '../../config';
 
-// export const registerUser = async (req: Request, res: Response) => {
-//   try {
-//     const { name, email, password } = req.body;
-//     const hashedPassword = await bcrypt.hash(password, 10);
+const loginUser = catchAsync(async (req: Request, res: Response) => {
+  const result = await AuthServices.loginUser(req.body);
+  const { refreshToken, accessToken } = result;
 
-//     const user = await User.create({ name, email, password: hashedPassword });
-//     res.status(201).json({
-//       success: true,
-//       message: 'User registered successfully',
-//       data: { id: user._id, name: user.name, email: user.email },
-//     });
-//   } catch (error) {
-//     res.status(400).json({ success: false, message: error.message });
-//   }
-// };
+  res.cookie('refreshToken', refreshToken, {
+    secure: config.NODE_ENV === 'production',
+    httpOnly: true,
+  });
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'User is logged in successfully',
+    data: {
+      accessToken,
+      refreshToken,
+    },
+  });
+});
 
-// export const loginUser = async (req: Request, res: Response) => {
-//   try {
-//     const { email, password } = req.body;
-//     const user = await User.findOne({ email });
-//     if (!user) return res.status(401).json({ message: 'Invalid credentials' });
+// const changePassword = catchAsync(async (req: Request, res: Response) => {
+//   console.log('asdf', req.user, req.body);
+//   const { ...passwordData } = req.body;
+//   const result = await AuthServices.changePassword(req.user, passwordData);
+//   sendResponse(res, {
+//     statusCode: StatusCodes.OK,
+//     success: true,
+//     message: 'Password is updated successfully',
+//     data: result,
+//   });
+// });
 
-//     const isMatch = await bcrypt.compare(password, user.password);
-//     if (!isMatch) return res.status(401).json({ message: 'Invalid credentials' });
+const refreshToken = catchAsync(async (req: Request, res: Response) => {
 
-//     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || '', { expiresIn: '1d' });
-//     res.json({ success: true, message: 'Login successful', data: { token } });
-//   } catch (error) {
-//     res.status(500).json({ success: false, message: error.message });
-//   }
-// };
+  const {refreshToken} = req.cookies;
+  const result = await AuthServices.refreshToken(refreshToken);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Access token is retrieved successfully',
+    data: result,
+  });
+});
+
+
+export const AuthControllers = {
+  loginUser,
+//   changePassword,
+  refreshToken
+};

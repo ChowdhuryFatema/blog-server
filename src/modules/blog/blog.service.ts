@@ -15,7 +15,7 @@ const createBlog = async (payload: IBlog) => {
 const getAllBlog = async (query: Record<string, unknown>) => {
 
     const blogQuery = new QueryBuilder(
-        Blog.find(),
+        Blog.find().populate('author'),
         query,
     )
         .search(BlogSearchableFields)
@@ -27,7 +27,7 @@ const getAllBlog = async (query: Record<string, unknown>) => {
 }
 
 const getSingleBlog = async (id: string) => {
-    const result = await Blog.findById(id);
+    const result = await Blog.findById(id).populate('author');
     if (!result) {
         throw new AppError(StatusCodes.NOT_FOUND, 'Blog not found');
     }
