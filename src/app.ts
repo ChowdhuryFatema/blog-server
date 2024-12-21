@@ -16,13 +16,7 @@ app.use(cors({origin: ['http://localhost:5170']}));
 
 // application routes
 
-app.use('/api/v1', router);
-
-// const test = async(req: Request, res: Response) => {
-//   Promise.reject();
-// }
-
-// app.get('/', test);
+app.use('/api', router);
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello World!');
