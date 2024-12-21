@@ -10,10 +10,10 @@ const moduleRoutes = [
     path: '/blogs',
     route: BlogRoutes,
   },
-  // {
-  //   path: '/admins',
-  //   route: AdminRoutes,
-  // },
+  {
+    path: '/admin',
+    route: UserRoutes,
+  },
   {
     path: '/auth',
     route: AuthRoute,

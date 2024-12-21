@@ -12,7 +12,19 @@ const UserValidationSchema = z.object({
         isBlocked: z.boolean().default(false),
     })
 })
+const UpdateUserValidationSchema = z.object({
+    body: z.object({
+        name: z.string().optional(),
+        email: z
+            .string()
+            .email("Invalid email format").optional(),
+        password: z.string().optional(),
+        role: z.enum(["admin", "user"]).default("user"),
+        isBlocked: z.boolean().default(false),
+    })
+})
 
 export const UserValidation = {
-    UserValidationSchema
+    UserValidationSchema,
+    UpdateUserValidationSchema
 }

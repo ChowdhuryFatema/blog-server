@@ -2,6 +2,7 @@ import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { StatusCodes } from 'http-status-codes';
 import { BlogServices } from './blog.service';
+import { User } from '../user/user.model';
 
 const createBlog = catchAsync(async (req, res) => {
 
@@ -58,9 +59,12 @@ const updateBlog = catchAsync(async (req, res) => {
 })
 
 const deleteBlog = catchAsync(async (req, res) => {
-
     const { id } = req.params;
-    BlogServices.deleteBlog(id);
+
+    const email = req.user.email;
+    const role = req.user.role;
+
+    await BlogServices.deleteBlog(id, email, role);
 
     sendResponse(res, {
         success: true,
