@@ -2,7 +2,6 @@ import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { StatusCodes } from 'http-status-codes';
 import { BlogServices } from './blog.service';
-import { User } from '../user/user.model';
 
 const createBlog = catchAsync(async (req, res) => {
 
@@ -73,21 +72,6 @@ const deleteBlog = catchAsync(async (req, res) => {
     })
 
 })
-
-// export const deleteBlog = async (req, res) => {
-
-//     const { id } = req.params;
-
-//     const blog = await Blog.findById(id);
-//     if (!blog) return res.status(404).json({ message: 'Blog not found' });
-
-//     if (blog.author.toString() !== req.user?._id.toString())
-//       return res.status(403).json({ message: 'Unauthorized to delete this blog' });
-
-//     await blog.remove();
-//     res.json({ success: true, message: 'Blog deleted successfully' });
-
-// };
 
 export const BlogControllers = {
     createBlog,
