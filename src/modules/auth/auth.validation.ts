@@ -4,12 +4,11 @@ const loginValidationSchema = z.object({
   body: z.object({
     email: z
       .string()
-      .email("Invalid email format")
-      .nonempty("Email is required"),
+      .email('Invalid email format')
+      .nonempty('Email is required'),
     password: z.string({ required_error: 'Password is required' }),
   }),
 });
-
 
 const refreshTokenValidationSchema = z.object({
   cookies: z.object({

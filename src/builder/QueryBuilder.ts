@@ -27,11 +27,11 @@ class QueryBuilder<T> {
 
   filter() {
     const queryObj = { ...this.query }; // Copy the query object
-  
+
     // Exclude non-filterable fields
     const excludeFields = ['search', 'sortBy', 'sortOrder'];
     excludeFields.forEach((field) => delete queryObj[field]);
-  
+
     // Apply specific filters like 'authorId'
     if (queryObj.filter) {
       const filterField = 'author'; // The field you want to filter on
@@ -42,20 +42,17 @@ class QueryBuilder<T> {
       // Apply other filters dynamically
       this.modelQuery = this.modelQuery.find(queryObj as FilterQuery<T>);
     }
-  
+
     return this;
   }
-  
 
   sort() {
-    const sortBy = this.query.sortBy as string || 'createdAt';
+    const sortBy = (this.query.sortBy as string) || 'createdAt';
     const sortOrder = this.query.sortOrder === 'desc' ? -1 : 1;
 
     this.modelQuery = this.modelQuery.sort({ [sortBy]: sortOrder });
     return this;
   }
-
-
 }
 
 export default QueryBuilder;

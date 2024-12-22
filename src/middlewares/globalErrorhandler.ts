@@ -25,41 +25,37 @@ const globalErrorhandler: ErrorRequestHandler = (error, req, res, next) => {
     message = simplifiedError?.message;
     errorSources = simplifiedError?.errorSources;
   } else if (error?.name === 'ValidationError') {
-    const simplifiedError = handleValidationError(error)
+    const simplifiedError = handleValidationError(error);
     statusCode = simplifiedError?.statusCode;
     message = simplifiedError?.message;
     errorSources = simplifiedError?.errorSources;
-
   } else if (error?.name === 'CastError') {
-    const simplifiedError = handleCastError(error)
+    const simplifiedError = handleCastError(error);
     statusCode = simplifiedError?.statusCode;
     message = simplifiedError?.message;
     errorSources = simplifiedError?.errorSources;
-  }
-  else if (error?.code === 11000) {
-    const simplifiedError = handleDuplicateError(error)
+  } else if (error?.code === 11000) {
+    const simplifiedError = handleDuplicateError(error);
     statusCode = simplifiedError?.statusCode;
     message = simplifiedError?.message;
     errorSources = simplifiedError?.errorSources;
-  }
-  else if (error instanceof AppError) {
+  } else if (error instanceof AppError) {
     statusCode = error?.statusCode;
     message = error?.message;
     errorSources = [
       {
         path: '',
-        message: error?.message
-      }
-    ]
-  }
-  else if (error instanceof Error) {
+        message: error?.message,
+      },
+    ];
+  } else if (error instanceof Error) {
     message = error?.message;
     errorSources = [
       {
         path: '',
-        message: error?.message
-      }
-    ]
+        message: error?.message,
+      },
+    ];
   }
 
   res.status(statusCode).json({

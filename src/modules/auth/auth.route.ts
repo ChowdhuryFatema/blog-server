@@ -9,9 +9,10 @@ import { UserValidation } from '../user/user.validation';
 
 const router = express.Router();
 
-router.post('/register',
-    validateRequest(UserValidation.UserValidationSchema),
-    UserControllers.createUser
+router.post(
+  '/register',
+  validateRequest(UserValidation.UserValidationSchema),
+  UserControllers.createUser,
 );
 
 router.post(
