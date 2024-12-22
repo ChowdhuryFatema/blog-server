@@ -39,7 +39,8 @@ const getSingleBlog = catchAsync(async (req, res) => {
 
 const updateBlog = catchAsync(async (req, res) => {
   const { id } = req.params;
-  const result = await BlogServices.updateBlog(id, req.body);
+  const email = req.user.email;
+  const result = await BlogServices.updateBlog(id, req.body, email);
 
   sendResponse(res, {
     success: true,

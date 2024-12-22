@@ -29,11 +29,25 @@ const getSingleBlog = async (id: string) => {
   return result;
 };
 
-const updateBlog = async (id: string, payload: IBlog) => {
-  const blog = await Blog.findById(id);
+const updateBlog = async (id: string, payload: IBlog, email: string) => {
+
+  const blog = await Blog.findById(id).populate<{ author: IUser }>('author');
   if (!blog) {
     throw new AppError(StatusCodes.NOT_FOUND, 'Blog is not found');
   }
+
+  // Get the author's email and role
+  const authorEmail = blog.author?.email;
+
+  // Authorization check: only the blog's author or an admin can delete
+  if (email !== authorEmail) {
+    throw new AppError(
+      StatusCodes.UNAUTHORIZED,
+      "You are not authorized to updated this blog. Only the blog's author can perform this action.",
+    );
+  }
+
+
   const result = await Blog.findByIdAndUpdate(id, payload, {
     new: true,
     runValidators: true,
