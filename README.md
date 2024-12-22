@@ -1,6 +1,6 @@
 # Blog Backend
 
-The **Blog** is a server-side application built using **Node.js**, **Express.js**, **Mongoose**, and **TypeScript**. It provides a comprehensive API for managing blogs, users, and admins, ensuring seamless data handling and efficient CRUD operations with MongoDB. Authentication and authorization are implemented using JWT tokens, along with Zod validation.
+The **Blog** is a server-side application built using **Node.js**, **Express.js**, **Mongoose**, and **TypeScript**. It provides a comprehensive API for managing blogs, users, and admins, ensuring seamless data handling and efficient CRUD operations with MongoDB. Authentication and authorization are implemented using **JWT Tokens**, along with **Zod validation**.
 
 ---
 
