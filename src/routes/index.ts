@@ -2,21 +2,31 @@ import { Router } from 'express';
 import { BlogRoutes } from '../modules/blog/blog.route';
 import { UserRoutes } from '../modules/user/user.route';
 import { AuthRoute } from '../modules/auth/auth.route';
+import { ProductRoutes } from '../modules/product/product.route';
+import { OrderRoutes } from '../modules/order/order.route';
 
 const router = Router();
 
 const moduleRoutes = [
   {
-    path: '/blogs',
-    route: BlogRoutes,
+    path: '/auth',
+    route: AuthRoute,
   },
   {
     path: '/admin',
     route: UserRoutes,
   },
   {
-    path: '/auth',
-    route: AuthRoute,
+    path: '/blogs',
+    route: BlogRoutes,
+  },
+  {
+    path: '/products',
+    route: ProductRoutes,
+  },
+  {
+    path: '/orders',
+    route: OrderRoutes,
   },
 ];
 
