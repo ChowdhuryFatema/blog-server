@@ -9,6 +9,7 @@ import { User } from '../modules/user/user.model';
 
 const auth = (...requiredRoles: TUserRole[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+    // const token = req.headers.authorization?.split(' ')[1];
     const token = req.headers.authorization?.split(' ')[1];
 
     // if the token is sent from the client

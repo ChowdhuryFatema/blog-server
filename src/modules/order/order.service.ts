@@ -1,6 +1,7 @@
-import Product from '../product/product.model';
+
+import { Product } from '../product/product.model';
 import { IOrder } from './order.interface';
-import Order from './order.model';
+import { Order } from './order.model';
 
 const createOrder = async (
   payload: IOrder,

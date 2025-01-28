@@ -39,5 +39,7 @@ const productSchema = new Schema<IProduct>(
   },
 );
 
-const Product = model<IProduct>('Product', productSchema);
-export default Product;
+export const Product = model<IProduct>('Product', productSchema);
+
+
+// export const Blog = model<IBlog>('Blog', BlogSchema);
