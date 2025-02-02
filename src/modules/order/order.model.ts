@@ -18,11 +18,11 @@ const orderSchema = new Schema<IOrder>(
       required: [true, 'Quantity is required and must be a valid number.'],
       min: 1,
     },
-    totalPrice: {
-      type: Number,
-      required: [true, 'Total price is required and must be a valid number.'],
-      min: 0,
-    },
+    // totalPrice: {
+    //   type: Number,
+    //   required: [true, 'Total price is required and must be a valid number.'],
+    //   min: 0,
+    // },
     status: {
       type: String,
       required: [true, 'Status is required.'],

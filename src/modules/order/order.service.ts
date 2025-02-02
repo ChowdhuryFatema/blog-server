@@ -32,7 +32,20 @@ const createOrder = async (
   if (orderedProduct.quantity === 0) {
     orderedProduct.inStock = false;
   }
+
+  let totalPrice = orderedProduct.price * quantity;
+
+  console.log("totalPrice", totalPrice)
   await orderedProduct.save();
+
+  // payment integration
+
+  // const shurjopayPayload = {
+  //   amount: totalPrice,
+  //   order_id: result._id,
+  //   currency: "BDT", 
+  //   customer_name: 
+  // }
 
   return result;
 };

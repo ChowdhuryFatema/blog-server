@@ -11,6 +11,10 @@ const productSchema = new Schema<IProduct>(
       type: String,
       required: [true, 'Brand name is required.'],
     },
+    image: {
+      type: String,
+      required: [true, 'Image is required.'],
+    },
     price: {
       type: Number,
       required: [true, 'Price is required and must be a valid number.'],
@@ -27,6 +31,10 @@ const productSchema = new Schema<IProduct>(
     quantity: {
       type: Number,
       required: [true, 'Quantity is required and must be a valid number.'],
+    },
+    category: {
+      type: String,
+      required: [true, 'category is required.'],
     },
     inStock: {
       type: Boolean,

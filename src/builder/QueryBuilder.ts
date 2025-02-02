@@ -25,18 +25,39 @@ class QueryBuilder<T> {
     return this;
   }
 
+
   filter() {
-    const queryObj = { ...this.query }; // copy
+    const queryObj = { ...this.query };
 
-    // Filtering
     const excludeFields = ['searchTerm', 'sort', 'limit', 'page', 'fields'];
+    excludeFields.forEach(el => delete queryObj[el]);
 
-    excludeFields.forEach((el) => delete queryObj[el]);
+    // Handle price range properly
+    if (queryObj.price) {
+      const [minPrice, maxPrice] = queryObj.price.toString().split(',').map(Number);
+      queryObj.price = {};
 
-    this.modelQuery = this.modelQuery.find(queryObj as FilterQuery<T>);
+      if (!isNaN(minPrice)) queryObj.price.$gte = minPrice;
+      if (!isNaN(maxPrice)) queryObj.price.$lte = maxPrice;
+
+      if (Object.keys(queryObj.price).length === 0) {
+        delete queryObj.price;
+      }
+    }
+
+    // Remove empty values but keep `false`
+    const cleanQuery = Object.fromEntries(
+      Object.entries(queryObj).filter(([key, value]) => {
+        return value !== "" && value !== undefined && !(typeof value === "object" && Object.keys(value).length === 0);
+      })
+    );
+
+    this.modelQuery = this.modelQuery.find(cleanQuery as FilterQuery<T>);
 
     return this;
   }
+
+
 
   sort() {
     const sort =
