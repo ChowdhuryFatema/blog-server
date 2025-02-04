@@ -9,33 +9,59 @@ const createOrder = catchAsync(async (req, res) => {
     const order = req.body;
     const productId = order.product;
     const quantity = order.quantity;
+    const user = req.user;
+    const client_ip = req.ip
 
-    const result = await OrderService.createOrder(order, productId, quantity);
+    const result = await OrderService.createOrder(order, productId, quantity, user, client_ip!);
 
     sendResponse(res, {
       success: true,
       message: 'Order created successfully',
       statusCode: StatusCodes.OK,
-      data: {},
+      data: result,
     });
   
 })
 
-const getRevenue = async (req: Request, res: Response, next: NextFunction) => {
-  try {
+const getAllOrders = catchAsync(async(req, res) => {
+  const result = await OrderService.getAllOrders();
+
+  sendResponse(res, {
+    success: true,
+    message: 'Order retrieved successfully',
+    statusCode: StatusCodes.OK,
+    data: result,
+  });
+
+})
+
+const verifyPayment = catchAsync(async(req, res) => {
+  const result = await OrderService.verifyPayment(req.query.order_id as string)
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.CREATED,
+    message: "Order verified successfully",
+    data: result,
+  })
+})
+
+const getRevenue = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+
     const result = await OrderService.getRevenue();
-    res.status(200).send({
-      message: 'Revenue calculated successfully',
+
+    sendResponse(res, {
       success: true,
-      data: {
-        totalRevenue: result,
-      },
+      message: 'Revenue calculated successfully',
+      statusCode: StatusCodes.OK,
+      data: result,
     });
-  } catch (error) {
-    next(error);
-  }
-};
+
+
+  
+})
 export const OrderController = {
   createOrder,
   getRevenue,
+  getAllOrders,
+  verifyPayment,
 };
