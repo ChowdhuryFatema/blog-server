@@ -1,67 +1,46 @@
-import { NextFunction, Request, Response } from 'express';
-import { OrderService } from './order.service';
-import catchAsync from '../../utils/catchAsync';
-import sendResponse from '../../utils/sendResponse';
-import { StatusCodes } from 'http-status-codes';
+import { StatusCodes } from "http-status-codes";
+import catchAsync from "../../utils/catchAsync";
+import sendResponse from "../../utils/sendResponse";
+import { orderService } from "./order.service";
 
 const createOrder = catchAsync(async (req, res) => {
-
-    const order = req.body;
-    const productId = order.product;
-    const quantity = order.quantity;
-    const user = req.user;
-    const client_ip = req.ip
-
-    const result = await OrderService.createOrder(order, productId, quantity, user, client_ip!);
-
-    sendResponse(res, {
-      success: true,
-      message: 'Order created successfully',
-      statusCode: StatusCodes.OK,
-      data: result,
-    });
-  
-})
-
-const getAllOrders = catchAsync(async(req, res) => {
-  const result = await OrderService.getAllOrders();
+  const user = req.user;
+  const order = await orderService.createOrder(
+    req.ip as string,
+    user,
+    req.body
+  );
 
   sendResponse(res, {
     success: true,
-    message: 'Order retrieved successfully',
-    statusCode: StatusCodes.OK,
-    data: result,
+    statusCode: StatusCodes.CREATED,
+    message: "Order placed successfully",
+    data: order.payment.checkout_url,
   });
+});
 
-})
+const getOrders = catchAsync(async (req, res) => {
+  const user = req.user;
+  const order = await orderService.getOrders(user._id as string);
 
-const verifyPayment = catchAsync(async(req, res) => {
-  const result = await OrderService.verifyPayment(req.query.order_id as string)
+  sendResponse(res, {
+    success: true,
+    statusCode: StatusCodes.OK,
+    message: "Order retrieved successfully",
+    data: order,
+  });
+});
+
+const verifyPayment = catchAsync(async (req, res) => {
+  // const order = await orderService.verifyPayment(req.query.sp_trxn_id as string);
+  const order = await orderService.verifyPayment(req.query.order_id as string);
+
   sendResponse(res, {
     success: true,
     statusCode: StatusCodes.CREATED,
     message: "Order verified successfully",
-    data: result,
-  })
-})
+    data: order,
+  });
+});
 
-const getRevenue = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-
-    const result = await OrderService.getRevenue();
-
-    sendResponse(res, {
-      success: true,
-      message: 'Revenue calculated successfully',
-      statusCode: StatusCodes.OK,
-      data: result,
-    });
-
-
-  
-})
-export const OrderController = {
-  createOrder,
-  getRevenue,
-  getAllOrders,
-  verifyPayment,
-};
+export const orderController = { createOrder, getOrders, verifyPayment };

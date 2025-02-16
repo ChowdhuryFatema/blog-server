@@ -1,43 +1,49 @@
-import mongoose, { model, Schema } from 'mongoose';
-import { IOrder } from './order.interface';
+import { model, Schema } from "mongoose";
+import { IOrder } from "./order.interface";
 
-const orderSchema = new Schema<IOrder>(
+const OrderSchema = new Schema<IOrder>(
   {
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: [true, 'User is required.'],
-    },
-    product: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Product',
-      required: [true, 'Product is required.'],
-    },
-    quantity: {
+    // user: {
+    //   type: Schema.Types.ObjectId,
+    //   ref: "User"
+    // },
+    products: [
+      {
+        product: {
+          type: Schema.Types.ObjectId,
+          ref: "Product",
+          required: true,
+        },
+        quantity: {
+          type: Number,
+          required: true,
+        },
+      },
+    ],
+    totalPrice: {
       type: Number,
-      required: [true, 'Quantity is required and must be a valid number.'],
-      min: 1,
+      required: true,
     },
     status: {
       type: String,
-      required: [true, 'Status is required.'],
-      min: 0,
+      enum: ["Pending", "Paid", "Shipped", "Completed", "Cancelled"],
+      default: "Pending",
     },
     transaction: {
       id: String,
-      transactionStatus: String,
-      bank_status: String,
-      sp_code: String,
-      sp_message: String,
+      code: Number,
+      message: String,
+      status: String,
       method: String,
+      bank_status: String,
       date_time: String,
-    }
+    },
   },
   {
-    versionKey: false,
     timestamps: true,
-  },
+  }
 );
 
-export const Order = model<IOrder>('Order', orderSchema);
+const Order = model<IOrder>("Order", OrderSchema);
 
+export default Order;

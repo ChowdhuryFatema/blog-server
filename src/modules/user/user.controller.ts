@@ -13,6 +13,21 @@ const createUser = catchAsync(async (req, res) => {
   });
 });
 
+
+const getMe = catchAsync(async (req, res) => {
+
+  const { email } = req.user;
+  const result = await UserServices.getMe(email);
+
+  sendResponse(res, {
+    success: true,
+    message: 'User retrieved successfully',
+    statusCode: StatusCodes.OK,
+    data: result,
+  });
+})
+
+
 const updateUser = catchAsync(async (req, res) => {
   const { userId } = req.params;
 
@@ -40,6 +55,7 @@ const deleteBlogByAdmin = catchAsync(async (req, res) => {
 
 export const UserControllers = {
   createUser,
+  getMe,
   updateUser,
   deleteBlogByAdmin,
 };

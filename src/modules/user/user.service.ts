@@ -8,6 +8,12 @@ const createUser = async (payload: IUser) => {
   const result = await User.create(payload);
   return result;
 };
+
+const getMe = async (email: string) => {
+  const result = await User.findOne({email});
+  return result;
+};
+
 const updateUser = async (id: string) => {
   const user = await User.findById(id);
   console.log(user);
@@ -34,6 +40,7 @@ const deleteBlogByAdmin = async (id: string) => {
 
 export const UserServices = {
   createUser,
+  getMe,
   updateUser,
   deleteBlogByAdmin,
 };

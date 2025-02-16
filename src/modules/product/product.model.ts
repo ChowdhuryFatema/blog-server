@@ -15,6 +15,10 @@ const productSchema = new Schema<IProduct>(
       type: String,
       required: [true, 'Image is required.'],
     },
+    rating: {
+      type: Number,
+      required: [true, 'rating is required.'],
+    },
     price: {
       type: Number,
       required: [true, 'Price is required and must be a valid number.'],

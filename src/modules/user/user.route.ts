@@ -13,6 +13,11 @@ router.patch(
   validateRequest(UserValidation.UpdateUserValidationSchema),
   UserControllers.updateUser,
 );
+router.get(
+  '/users/:email',
+  auth(USER_ROLE.admin, USER_ROLE.user),
+  UserControllers.getMe,
+);
 
 router.delete(
   '/blogs/:id',
