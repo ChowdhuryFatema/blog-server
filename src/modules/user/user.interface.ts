@@ -6,7 +6,7 @@ export interface IUser {
   name: string;
   email: string;
   password: string;
-  image: string;
+  image?: string;
   role: 'admin' | 'user';
   isBlocked: boolean;
   createdAt: Date;

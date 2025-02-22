@@ -26,6 +26,16 @@ const createUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, voi
         data: result,
     });
 }));
+const getMe = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { email } = req.user;
+    const result = yield user_service_1.UserServices.getMe(email);
+    (0, sendResponse_1.default)(res, {
+        success: true,
+        message: 'User retrieved successfully',
+        statusCode: http_status_codes_1.StatusCodes.OK,
+        data: result,
+    });
+}));
 const updateUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { userId } = req.params;
     const result = yield user_service_1.UserServices.updateUser(userId);
@@ -48,6 +58,7 @@ const deleteBlogByAdmin = (0, catchAsync_1.default)((req, res) => __awaiter(void
 }));
 exports.UserControllers = {
     createUser,
+    getMe,
     updateUser,
     deleteBlogByAdmin,
 };

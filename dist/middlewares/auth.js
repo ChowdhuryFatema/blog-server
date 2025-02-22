@@ -21,6 +21,7 @@ const user_model_1 = require("../modules/user/user.model");
 const auth = (...requiredRoles) => {
     return (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
         var _a;
+        // const token = req.headers.authorization?.split(' ')[1];
         const token = (_a = req.headers.authorization) === null || _a === void 0 ? void 0 : _a.split(' ')[1];
         // if the token is sent from the client
         if (!token) {
@@ -42,6 +43,7 @@ const auth = (...requiredRoles) => {
             throw new AppError_1.AppError(http_status_codes_1.StatusCodes.UNAUTHORIZED, 'You are not authorized');
         }
         req.user = decoded;
+        // req.user = user;
         next();
     }));
 };

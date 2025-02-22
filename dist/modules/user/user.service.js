@@ -18,6 +18,10 @@ const createUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield user_model_1.User.create(payload);
     return result;
 });
+const getMe = (email) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield user_model_1.User.findOne({ email });
+    return result;
+});
 const updateUser = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield user_model_1.User.findById(id);
     console.log(user);
@@ -37,6 +41,7 @@ const deleteBlogByAdmin = (id) => __awaiter(void 0, void 0, void 0, function* ()
 });
 exports.UserServices = {
     createUser,
+    getMe,
     updateUser,
     deleteBlogByAdmin,
 };

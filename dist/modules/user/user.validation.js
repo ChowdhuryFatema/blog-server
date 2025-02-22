@@ -9,6 +9,7 @@ const UserValidationSchema = zod_1.z.object({
             .string()
             .email('Invalid email format')
             .nonempty('Email is required'),
+        image: zod_1.z.string().optional(),
         password: zod_1.z.string().min(6, 'Password must be at least 6 characters'),
         role: zod_1.z.enum(['admin', 'user']).default('user'),
         isBlocked: zod_1.z.boolean().default(false),
@@ -17,6 +18,7 @@ const UserValidationSchema = zod_1.z.object({
 const UpdateUserValidationSchema = zod_1.z.object({
     body: zod_1.z.object({
         name: zod_1.z.string().optional(),
+        image: zod_1.z.string().optional(),
         email: zod_1.z.string().email('Invalid email format').optional(),
         password: zod_1.z.string().optional(),
         role: zod_1.z.enum(['admin', 'user']).default('user'),
