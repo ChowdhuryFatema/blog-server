@@ -1,22 +1,17 @@
-# Blog Backend
+# Bike Store Backend
 
-The **Blog** is a server-side application built using **Node.js**, **Express.js**, **Mongoose**, and **TypeScript**. It provides a comprehensive API for managing blogs, users, and admins, ensuring seamless data handling and efficient CRUD operations with MongoDB. Authentication and authorization are implemented using **JWT Tokens**, along with **Zod validation**.
+The **Bike Store Backend** is a server-side application built using **Node.js**, **Express.js**, **Mongoose**, and **TypeScript**. It provides a comprehensive API for managing bikes and orders, ensuring seamless data handling and efficient CRUD operations with MongoDB.
 
 ---
 
 ## Features
 
-- **Blog Management**: Add, update, retrieve, and delete blog entries in the system.
-- **user Management**: Manage users, including retrieving, updating, and deleting user information.
-- **Relationships**:  Ensures data integrity with MongoDB references between users, blogs, and associated entities.
-- **TypeScript**: Provides type-safe development for improved maintainability and scalability.
+- **Bike Management**: Add, update, retrieve, and delete bikes from the inventory.
+- **Order Management**: Place, retrieve, update, and cancel orders for bikes, with each order linked to a specific bike via a reference ID.
+- **Relationships**: Ensures data integrity with MongoDB references between bikes and orders.
+- **TypeScript**: Implements type-safe development for improved maintainability and scalability.
 - **Error Handling**: Centralized middleware for error validation and responses.
-- **Authentication and Authorization**: 
-   - User Roles:
-      - Users can update only their own blogs.
-      - Admins can delete any blog but cannot update blogs.
-      - Admins can block users for any inappropriate actions.
-   - All actions require the user to be logged in first via token-based authentication.
+- **Authentication (Optional)**: Supports token-based authentication for protected endpoints.
 
 ---
 
@@ -41,8 +36,8 @@ The **Blog** is a server-side application built using **Node.js**, **Express.js*
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/ChowdhuryFatema/blog-server.git
-   cd blog-server
+   git clone https://github.com/ChowdhuryFatema/bike-store-server.git
+   cd bike-store-server
    Install dependencies:
    ```
 
@@ -64,6 +59,12 @@ The **Blog** is a server-side application built using **Node.js**, **Express.js*
    JWT_REFRESH_SECRET=
    JWT_ACCESS_EXPIRES_IN=
    JWT_REFRESH_EXPIRES_IN=
+
+   SP_ENDPOINT=
+   SP_USERNAME=
+   SP_PASSWORD=
+   SP_PREFIX=
+   SP_RETURN_URL=
    ```
 
 4. Build the project:
