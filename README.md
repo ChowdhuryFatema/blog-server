@@ -11,7 +11,7 @@ The **Bike Store Backend** is a server-side application built using **Node.js**,
 - **Relationships**: Ensures data integrity with MongoDB references between bikes and orders.
 - **TypeScript**: Implements type-safe development for improved maintainability and scalability.
 - **Error Handling**: Centralized middleware for error validation and responses.
-- **Authentication (Optional)**: Supports token-based authentication for protected endpoints.
+- **Authentication**: Supports token-based authentication for protected endpoints.
 
 ---
 
